@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import '../tools/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:logger/logger.dart';
 
 enum RequestType { get, post, put, delete }
 
@@ -23,10 +26,15 @@ class ApiService {
 
   static ApiCall(
     String endpoint,
-    RequestType requestType,
+    RequestType requestType, {
     String? token,
     Map<String, dynamic>? data,
-  ) async {
+  }) async {
+    if (token != null) {
+      _dio.options.headers.update('authorization', (value) => "New",
+          ifAbsent: () => "Bearer $token");
+    }
+
     try {
       late Response response;
       if (requestType == RequestType.get) {
@@ -39,6 +47,12 @@ class ApiService {
         response = await _dio.delete(endpoint, data: data);
       }
       return response;
-    } on DioException {}
+    } on DioException catch (error) {
+      Logger().e(error);
+    } on SocketException catch (error) {
+      Logger().e(error);
+    } catch (error) {
+      Logger().e(error);
+    }
   }
 }
