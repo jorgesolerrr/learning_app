@@ -2,20 +2,22 @@
 import 'dart:convert';
 
 class UserModel {
-  final String lms;
-  final String userid;
-  final String userpassword;
-  final String useremail;
-  final String? userrole;
-  final String? fullname;
+  String lms;
+  String userid;
+  String userpassword;
+  String useremail;
+  String? userrole;
+  String? fullname;
+
   UserModel({
-    required this.lms,
-    required this.userid,
-    required this.userpassword,
-    required this.useremail,
-    this.userrole,
-    this.fullname,
+    this.lms = "",
+    this.userid = "",
+    this.userpassword = "",
+    this.useremail = "",
+    this.userrole = "",
+    this.fullname = "",
   });
+  
 
   UserModel copyWith({
     String? lms,

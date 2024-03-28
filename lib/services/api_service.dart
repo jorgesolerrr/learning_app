@@ -1,13 +1,15 @@
-import 'dart:io';
 
 import 'package:dio/dio.dart';
+import '../base/base_exceptions.dart';
 import '../tools/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:logger/logger.dart';
+import 'error_handler.dart';
 
 enum RequestType { get, post, put, delete }
 
 class ApiService {
+  static final Logger logger = Logger();
   static final Dio _dio = Dio(BaseOptions(
       baseUrl: Constants.baseLocalUrl,
       headers: {
@@ -47,12 +49,19 @@ class ApiService {
         response = await _dio.delete(endpoint, data: data);
       }
       return response;
-    } on DioException catch (error) {
-      Logger().e(error);
-    } on SocketException catch (error) {
-      Logger().e(error);
+    } on DioException catch (dioError) {
+      Exception exception = handleDioError(dioError);
+      logger.e(
+          "Throwing error from repository: >>>>>>> $exception : ${(exception as BaseException).message}");
+      throw exception;
     } catch (error) {
-      Logger().e(error);
+      logger.e("Generic error: >>>>>>> $error");
+
+      if (error is BaseException) {
+        rethrow;
+      }
+
+      throw handleError("$error");
     }
   }
 }
