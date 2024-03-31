@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:learning_app/routes/pages.dart';
 
-import 'sign_up_screen.dart';
+import '../features/auth/views/sign_up_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -24,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 1.6,
                       decoration: BoxDecoration(
-                          color: Colors.blue[700],
+                          color: Colors.blue[300],
                           borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(60),
                               bottomRight: Radius.circular(60))),
@@ -63,56 +65,48 @@ class WelcomeScreen extends StatelessWidget {
                           )),
                       const SizedBox(height: 30),
                       Material(
-                        color: Colors.blue[700],
-                        borderRadius: BorderRadius.circular(40),
-                        child: InkWell(
-                          onTap: () {
+                          color: Colors.blue[700],
+                          borderRadius: BorderRadius.circular(40),
+                          child: InkWell(
+                              onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                            SignUpScreen()),
+                                      builder: (context) => SignUpView()),
                                 );
                               },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 80),
-                            child: const Text(
-                              "Let's Get Starter",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1),
-                            ),
-                          )
-                        )
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Already have an account?",
-                                style: TextStyle(
-                                    fontSize: 17,
-                                )
-                              ),
-                              TextButton(
-                                onPressed: () {}, 
-                                child: Text (
-                                  "Sign in",
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 80),
+                                child: const Text(
+                                  "Let's Get Starter",
                                   style: TextStyle(
-                                        fontSize: 17,
-                                        color: Colors.blue[700]
-                                      )
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1),
                                 ),
-                              )
-                            ]
-                            )
-                          )
-                        ],
+                              ))),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Already have an account?",
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                    )),
+                                TextButton(
+                                  onPressed: () {
+                                    Get.toNamed(Routes.AUTH_SIGNIN);
+                                  },
+                                  child: Text("Sign in",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          color: Colors.blue[700])),
+                                )
+                              ]))
+                    ],
                   ),
                 ),
               )
